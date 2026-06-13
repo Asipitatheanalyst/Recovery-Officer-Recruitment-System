@@ -342,7 +342,7 @@ The anonymised sample workbook contains four sheets reflecting the real system s
 |---|---|
 | Interview invite automation script | [`/scripts/interview-invite-sender.gs`](scripts/interview-invite-sender.gs) |
 | Offer letter automation script | [`/scripts/offer-letter-sender.gs`](scripts/offer-letter-sender.gs) |
-| Anonymised pipeline dataset | [`/sample-data/RO_Recruitment_Anonymized_Portfolio.xlsx`](sample-data/RO_Recruitment_Anonymized_Portfolio.xlsx) |
+| Anonymised pipeline dataset | [`/Recruitment Automation Project.xlsx`](https://github.com/user-attachments/files/28915292/Recruitment.Automation.Project.xlsx) |
 
 ---
 
