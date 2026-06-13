@@ -23,14 +23,13 @@
 - [Tools Used](#-tools-used)
 - [Lessons Learned & V2 Improvements](#-lessons-learned--v2-improvements)
 - [Limitations](#-limitations)
-- [Potential Extensions](#-potential-extensions)
 - [Project Deliverables](#-project-deliverables)
 
 ---
 
 ## 📌 Project Overview
 
-This project is a **fully automated recruitment pipeline** built using Google Workspace tools and Google Apps Script. It was designed to manage a mass hiring campaign for the **Recovery Officer** role across multiple Nigerian states.
+This project is a **fully automated recruitment pipeline** built using Google Workspace tools and Google Apps Script. It was designed to manage a mass hiring campaign for the **Recovery Officer** role across **8 Nigerian states**.
 
 The system handles the entire candidate journey — from application intake through to offer letter delivery — with minimal manual intervention. Two custom Apps Script functions replaced what would have been days of repetitive admin work.
 
@@ -49,7 +48,7 @@ The organisation needed to hire Recovery Officers across **8 Nigerian states** w
 | No central tracker | No visibility into pipeline status |
 | No audit trail | No record of who was contacted or when |
 
-With **164 applicants** across multiple states, doing this manually would have taken an estimated **[X] hours of admin time**. The system reduced that to under 30 minutes of total human effort.
+With **176 applicants** across 8 states, doing this manually would have taken an estimated **10+ hours of admin time**. The system reduced that to under 30 minutes of total human effort.
 
 ---
 
@@ -62,45 +61,70 @@ This is a **live production project**. Data was generated through:
 - **Google Sheets** — central candidate database, interview schedule, shortlist tracker
 - **Gmail logs** — email send confirmations with timestamps
 
->  The sample data in this repository has been fully anonymised. All names, emails, and phone numbers have been replaced with generated data. Operational columns (status, timestamps, slot assignments) reflect the real system structure.
+> 📁 The sample data in this repository has been fully anonymised. All names, emails, and phone numbers have been replaced with generated data. Operational columns (status, timestamps, slot assignments) reflect the real system structure.
 
 ---
 
 ## 📌 System Architecture
 
 The pipeline runs across three stages, all connected inside Google Workspace:
-
-```
 Google Form (Applications)
-        │
-        ▼
+
+│
+
+▼
+
 Google Sheets — Form Responses Sheet (Candidate Database)
-        │
-        ▼
+
+│
+
+▼
+
 [Manual Shortlisting Review]
-        │
-        ▼
+
+│
+
+▼
+
 Apps Script — Interview Invite Sender
-        │   → Auto-calculates time slots
-        │   → Sends personalised Gmail invites
-        │   → Logs send timestamp per row
-        ▼
+
+│   → Auto-calculates time slots
+
+│   → Sends personalised Gmail invites
+
+│   → Logs send timestamp per row
+
+▼
+
 Google Sheets — Interview Schedule Sheet
-        │
-        ▼
+
+│
+
+▼
+
 [Interview Conducted via Google Meet]
-        │
-        ▼
+
+│
+
+▼
+
 [Offer Decision]
-        │
-        ▼
+
+│
+
+▼
+
 Apps Script — Offer Letter Sender
-        │   → Sends branded HTML offer letter
-        │   → CC's Finance automatically
-        │   → Logs "Sent" status per row
-        ▼
+
+│   → Sends branded HTML offer letter
+
+│   → CC's Finance automatically
+
+│   → Logs "Sent" status per row
+
+▼
+
 Google Sheets — Shortlisted Candidates Sheet
-```
 
 ---
 
@@ -123,15 +147,11 @@ A structured Google Form collected the following from each applicant:
 
 All responses flowed automatically into the **Form Responses** sheet in Google Sheets, creating a live searchable candidate database from the moment the form went live.
 
-**→ Live Form:** [View Application Form](https://forms.gle/[https://forms.gle/uydP54XuNt2XTH9s8)
+**Application form:** Built with Google Forms — 10 structured fields, CV upload to Google Drive.
 
 ### Screenshot — Application Form
-`<img width="1358" height="652" alt="Capture" src="https://github.com/user-attachments/assets/6201ec3e-3d19-46b4-b07a-9ebf0e8ce017" />
-`
 
-### Screenshot — Form Responses Sheet
-`<img width="481" height="615" alt="Capture" src="https://github.com/user-attachments/assets/2474c7c6-d554-4d23-aee3-a7e2e4229fba" />
-`
+![Google Form](https://github.com/user-attachments/assets/f0f4d2a0-82e2-4402-8f1c-4cd26e6f8ced)
 
 ---
 
@@ -139,7 +159,7 @@ All responses flowed automatically into the **Form Responses** sheet in Google S
 
 **Script:** [`interview-invite-sender.gs`](scripts/interview-invite-sender.gs)
 
-Once candidates were shortlisted, a single function run handled the entire invite process.
+Once candidates were shortlisted, a single function run handled the entire invite process for **176 candidates** across 8 states.
 
 ### What the script does — step by step:
 
@@ -178,10 +198,12 @@ Every row is updated with either:
 A 1.5-second pause between sends (`Utilities.sleep(1500)`) prevents Gmail quota errors.
 
 ### Screenshot — Interview Schedule Sheet with Send Logs
-`[Insert screenshot showing the "Email Sent" column with YES timestamps]`
 
-### Screenshot — Sample Invite Email
-`[Insert screenshot of the interview invitation email received]`
+![Interview Schedule](https://github.com/user-attachments/assets/2ae54427-2d64-4db3-a38a-66d095facc70)
+
+### Screenshot — Sample Invite Email Received by Candidate
+
+![Email Sent Timestamps](https://github.com/user-attachments/assets/a2edec93-61c0-4caf-947c-49ae98891d05)
 
 ---
 
@@ -189,7 +211,7 @@ A 1.5-second pause between sends (`Utilities.sleep(1500)`) prevents Gmail quota 
 
 **Script:** [`offer-letter-sender.gs`](scripts/offer-letter-sender.gs)
 
-For candidates who passed the interview, a single function run sent fully branded HTML offer letters to all shortlisted candidates.
+For candidates who passed the interview, a single function run sent fully branded HTML offer letters to all **75+ shortlisted candidates**.
 
 ### What the script does:
 
@@ -210,12 +232,6 @@ For candidates who passed the interview, a single function run sent fully brande
 if (data[i][3] === "Sent") continue;
 ```
 
-### Screenshot — Offer Letter Sheet with Status Column
-`[Insert screenshot of OFFER LETTER sheet showing Sent/Failed column]`
-
-### Screenshot — Sample Offer Letter Email
-`[Insert screenshot of the HTML offer letter as received in Gmail]`
-
 ---
 
 ## 📌 Key Scripts & Logic
@@ -232,7 +248,6 @@ if (data[i][3] === "Sent") continue;
 const COL = {
   name:  headers.indexOf("NAME"),
   email: headers.indexOf("EMAIL ADDRESS"),
-  ...
 };
 ```
 
@@ -257,21 +272,18 @@ The anonymised sample workbook contains four sheets reflecting the real system s
 
 **→** [`/sample-data/RO_Recruitment_Anonymized_Portfolio.xlsx`](sample-data/RO_Recruitment_Anonymized_Portfolio.xlsx)
 
-### Screenshot — Pipeline Summary Sheet
-`[Insert screenshot of the Pipeline Summary tab]`
-
 ---
 
 ## 📌 Results & Time Saved
 
 | Metric | Value |
 |---|---|
-| Total applications processed | 164 |
-| Nigerian states covered | [INSERT] |
-| Candidates invited to interview | [INSERT] |
-| Offer letters sent via script | [INSERT] |
+| Total applications processed | 176 |
+| Nigerian states covered | 8 |
+| Candidates invited to interview | 176 |
+| Offer letters sent via script | 75+ |
 | Time to send all interview invites | < 5 minutes |
-| Estimated manual time for same task | ~[INSERT] hours |
+| Estimated manual time for same task | ~8–10 hours |
 | Double-bookings across interviewers | 0 |
 | Finance automatically CC'd on offers | ✅ Yes — every email |
 | Full audit trail (timestamps per send) | ✅ Yes — per row |
@@ -280,10 +292,10 @@ The anonymised sample workbook contains four sheets reflecting the real system s
 
 | Task | Manual Time (est.) | Automated Time | Saved |
 |---|---|---|---|
-| Interview invite sending | ~[X] hrs | < 5 mins | ~[X] hrs |
-| Slot assignment | ~[X] hrs | 0 (auto) | ~[X] hrs |
-| Offer letter sending + CC | ~[X] hrs | < 10 mins | ~[X] hrs |
-| **Total** | **~[X] hrs** | **< 15 mins** | **~[X] hrs** |
+| Interview invite sending | ~8 hrs | < 5 mins | ~8 hrs |
+| Slot assignment | ~2 hrs | 0 (auto) | ~2 hrs |
+| Offer letter sending + Finance CC | ~6 hrs | < 10 mins | ~6 hrs |
+| **Total** | **~16 hrs** | **< 15 mins** | **~16 hrs** |
 
 ---
 
@@ -304,14 +316,12 @@ The anonymised sample workbook contains four sheets reflecting the real system s
 
 ## 📌 Lessons Learned & V2 Improvements
 
-These are real issues encountered during the live campaign, documented as a guide for what a better system would include:
-
 | Issue Encountered | Root Cause | V2 Fix |
 |---|---|---|
 | Inconsistent experience field data ("Nil", "2019", "Teamwork") | Free-text input | Replace with dropdown: 0–1 / 1–3 / 3–5 / 5+ years |
-| Missing and invalid email addresses (~10–15 candidates) | No form validation | Make email required; add format validation |
-| Duplicate submissions (4+ candidates submitted twice) | No deduplication on intake | Apps Script trigger to flag duplicates on form submit |
-| Notes stored inside name cells ("John Smith (wrong email)") | Ad hoc workaround during processing | Add dedicated Notes/Flag column from the start |
+| Missing and invalid email addresses | No form validation | Make email required; add format validation |
+| Duplicate submissions | No deduplication on intake | Apps Script trigger to flag duplicates on form submit |
+| Notes stored inside name cells | Ad hoc workaround during processing | Add dedicated Notes/Flag column from the start |
 | Single invite batch per campaign | System not designed for multi-round tracking | Add invite round number and resend tracking columns |
 
 ---
@@ -326,19 +336,6 @@ These are real issues encountered during the live campaign, documented as a guid
 
 ---
 
-## 📌 Potential Extensions
-
-This system can be extended into:
-
-- 🤖 **AI-powered CV screening** — Claude or GPT API to auto-score and rank candidates
-- 📊 **Power BI / Looker Studio recruitment dashboard** — live hiring funnel analytics
-- 📱 **WhatsApp invite delivery** — using Wati or Twilio for candidates without email
-- 🔁 **Multi-round tracking** — automated follow-up for non-responders
-- 📝 **Digital offer acceptance** — candidates sign and return via Google Forms
-- 🔗 **ATS integration** — connect pipeline to Workable, BambooHR, or similar
-
----
-
 ## 📌 Project Deliverables
 
 | Deliverable | Location |
@@ -346,18 +343,17 @@ This system can be extended into:
 | Interview invite automation script | [`/scripts/interview-invite-sender.gs`](scripts/interview-invite-sender.gs) |
 | Offer letter automation script | [`/scripts/offer-letter-sender.gs`](scripts/offer-letter-sender.gs) |
 | Anonymised pipeline dataset | [`/sample-data/RO_Recruitment_Anonymized_Portfolio.xlsx`](sample-data/RO_Recruitment_Anonymized_Portfolio.xlsx) |
-| Screenshots | [`/docs/screenshots/`](docs/screenshots/) |
 
 ---
 
 ## 👤 About
 
-**Mary [Your Last Name]**
+**Mary Olurinola**
 HR Operations | AI & Automation Consultant
 Building automated HR and business systems for African SMEs.
 
-🔗 [LinkedIn](https://linkedin.com/in/[your-handle])
-📧 [your-email@gmail.com]
+🔗 [LinkedIn](https://www.linkedin.com/in/mary-olurinola)
+📧 olurinolamary1@gmail.com
 
 ---
 
