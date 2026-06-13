@@ -270,7 +270,7 @@ The anonymised sample workbook contains four sheets reflecting the real system s
 | **Interview Schedule** | Auto-assigned slots, Meet links, send timestamps |
 | **Shortlisted Candidates** | Final pipeline stage with employment status |
 
-**→** [`/sample-data/RO_Recruitment_Anonymized_Portfolio.xlsx`](sample-data/RO_Recruitment_Anonymized_Portfolio.xlsx)
+**→**[Recruitment Automation Project.xlsx](https://github.com/user-attachments/files/28915292/Recruitment.Automation.Project.xlsx)
 
 ---
 
