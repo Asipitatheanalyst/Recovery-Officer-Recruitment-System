@@ -123,7 +123,7 @@ A structured Google Form collected the following from each applicant:
 
 All responses flowed automatically into the **Form Responses** sheet in Google Sheets, creating a live searchable candidate database from the moment the form went live.
 
-**→ Live Form:** [View Application Form](https://forms.gle/[https://forms.gle/uydP54XuNt2XTH9s8])
+**→ Live Form:** [View Application Form](https://forms.gle/[https://forms.gle/uydP54XuNt2XTH9s8)
 
 ### Screenshot — Application Form
 `<img width="1358" height="652" alt="Capture" src="https://github.com/user-attachments/assets/6201ec3e-3d19-46b4-b07a-9ebf0e8ce017" />
