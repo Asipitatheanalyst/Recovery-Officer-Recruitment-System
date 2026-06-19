@@ -29,7 +29,7 @@
 
 ## 📌 Project Overview
 
-This project is a **fully automated recruitment pipeline** built using Google Workspace tools and Google Apps Script. It was designed to manage a mass hiring campaign for the **Recovery Officer** role across **8 Nigerian states**.
+This project is a **fully automated recruitment pipeline** built using Google Workspace tools and Google Apps Script. It was designed to manage a mass hiring campaign for the **Recovery Officer** role across **9 Nigerian states**.
 
 The system handles the entire candidate journey — from application intake through to offer letter delivery — with minimal manual intervention. Two custom Apps Script functions replaced what would have been days of repetitive admin work.
 
@@ -37,7 +37,7 @@ The system handles the entire candidate journey — from application intake thro
 
 ## 📌 Business Problem
 
-The organisation needed to hire Recovery Officers across **8 Nigerian states** within a tight hiring window. The existing process was entirely manual:
+The organisation needed to hire Recovery Officers across **9 Nigerian states** within a tight hiring window. The existing process was entirely manual:
 
 | Pain Point | Impact |
 |---|---|
@@ -48,7 +48,7 @@ The organisation needed to hire Recovery Officers across **8 Nigerian states** w
 | No central tracker | No visibility into pipeline status |
 | No audit trail | No record of who was contacted or when |
 
-With **176 applicants** across 8 states, doing this manually would have taken an estimated **10+ hours of admin time**. The system reduced that to under 30 minutes of total human effort.
+With **166 applicants** processed across **9 Nigerian states** through **4 separate interview rounds**, doing this manually would have taken an estimated **9.5+ hours of admin time**. The system reduced that to under 30 minutes of total human effort.
 
 ---
 
@@ -68,6 +68,7 @@ This is a **live production project**. Data was generated through:
 ## 📌 System Architecture
 
 The pipeline runs across three stages, all connected inside Google Workspace:
+
 Google Form (Applications)
 
 │
@@ -159,7 +160,7 @@ All responses flowed automatically into the **Form Responses** sheet in Google S
 
 **Script:** [`interview-invite-sender.gs`](scripts/interview-invite-sender.gs)
 
-Once candidates were shortlisted, a single function run handled the entire invite process for **176 candidates** across 8 states.
+Once candidates were shortlisted, running this script once per round handled the entire invite process — **134 candidates invited across 4 separate interview rounds**, spanning 9 states.
 
 ### What the script does — step by step:
 
@@ -211,7 +212,7 @@ A 1.5-second pause between sends (`Utilities.sleep(1500)`) prevents Gmail quota 
 
 **Script:** [`offer-letter-sender.gs`](scripts/offer-letter-sender.gs)
 
-For candidates who passed the interview, a single function run sent fully branded HTML offer letters to all **75+ shortlisted candidates**.
+For candidates who passed the interview, running this script handled the entire offer process — **33 offer letters sent across 2 batches** to shortlisted candidates.
 
 ### What the script does:
 
@@ -261,16 +262,16 @@ const COL = {
 
 ## 📌 Pipeline Tracker & Dashboard
 
-The anonymised sample workbook contains four sheets reflecting the real system structure:
+The anonymised sample workbook contains three sheets reflecting the real system structure:
 
 | Sheet | Purpose |
 |---|---|
 | **Pipeline Summary** | Case study metrics — totals, automation stats, time saved |
 | **Form Responses** | Full candidate database with status and invite columns |
-| **Interview Schedule** | Auto-assigned slots, Meet links, send timestamps |
-| **Shortlisted Candidates** | Final pipeline stage with employment status |
+| **Interview Schedule (All Rounds)** | Auto-assigned slots, Meet links, send timestamps across all 4 rounds |
+| **Offer Letters** | Final pipeline stage with employment status |
 
-**→**[Recruitment Automation Project.xlsx](https://github.com/user-attachments/files/28915292/Recruitment.Automation.Project.xlsx)
+**→** [Recruitment Automation Project.xlsx](https://github.com/user-attachments/files/28915292/Recruitment.Automation.Project.xlsx)
 
 ---
 
@@ -278,12 +279,12 @@ The anonymised sample workbook contains four sheets reflecting the real system s
 
 | Metric | Value |
 |---|---|
-| Total applications processed | 176 |
-| Nigerian states covered | 8 |
-| Candidates invited to interview | 176 |
-| Offer letters sent via script | 75+ |
-| Time to send all interview invites | < 5 minutes |
-| Estimated manual time for same task | ~8–10 hours |
+| Total applications processed | 166 |
+| Nigerian states covered | 9 |
+| Candidates invited to interview | 134 |
+| Offer letters sent via script | 33 |
+| Time to send all interview invites | < 5 minutes per round |
+| Estimated manual time for same task | ~9.5 hours |
 | Double-bookings across interviewers | 0 |
 | Finance automatically CC'd on offers | ✅ Yes — every email |
 | Full audit trail (timestamps per send) | ✅ Yes — per row |
@@ -292,10 +293,9 @@ The anonymised sample workbook contains four sheets reflecting the real system s
 
 | Task | Manual Time (est.) | Automated Time | Saved |
 |---|---|---|---|
-| Interview invite sending | ~8 hrs | < 5 mins | ~8 hrs |
-| Slot assignment | ~2 hrs | 0 (auto) | ~2 hrs |
-| Offer letter sending + Finance CC | ~6 hrs | < 10 mins | ~6 hrs |
-| **Total** | **~16 hrs** | **< 15 mins** | **~16 hrs** |
+| Interview invite sending (134 invites, 4 rounds) | ~6.7 hrs | < 5 mins per round | ~6.7 hrs |
+| Offer letter sending + Finance CC (33 offers) | ~2.8 hrs | < 10 mins | ~2.8 hrs |
+| **Total** | **~9.5 hrs** | **< 15 mins** | **~9.5 hrs** |
 
 ---
 
@@ -322,7 +322,7 @@ The anonymised sample workbook contains four sheets reflecting the real system s
 | Missing and invalid email addresses | No form validation | Make email required; add format validation |
 | Duplicate submissions | No deduplication on intake | Apps Script trigger to flag duplicates on form submit |
 | Notes stored inside name cells | Ad hoc workaround during processing | Add dedicated Notes/Flag column from the start |
-| Single invite batch per campaign | System not designed for multi-round tracking | Add invite round number and resend tracking columns |
+| Multiple invite batches per campaign | System not originally designed for multi-round tracking | Add invite round number and resend tracking columns |
 
 ---
 
@@ -342,7 +342,7 @@ The anonymised sample workbook contains four sheets reflecting the real system s
 |---|---|
 | Interview invite automation script | [`/scripts/interview-invite-sender.gs`](scripts/interview-invite-sender.gs) |
 | Offer letter automation script | [`/scripts/offer-letter-sender.gs`](scripts/offer-letter-sender.gs) |
-| Anonymised pipeline dataset | [`/Recruitment Automation Project.xlsx`](https://github.com/user-attachments/files/28915292/Recruitment.Automation.Project.xlsx) |
+| Anonymised pipeline dataset | [`Recruitment Automation Project.xlsx`](https://github.com/user-attachments/files/28915292/Recruitment.Automation.Project.xlsx) |
 
 ---
 
