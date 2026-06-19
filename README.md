@@ -204,7 +204,7 @@ A 1.5-second pause between sends (`Utilities.sleep(1500)`) prevents Gmail quota 
 
 ### Screenshot — Sample Invite Email Received by Candidate
 
-![Email Sent Timestamps](https://github.com/user-attachments/assets/a2edec93-61c0-4caf-947c-49ae98891d05)
+![Email Sent Timestamps](https://github.com/user-attachments/assets/13edf964-86c4-4d96-8ca7-bbac50250123)
 
 ---
 
